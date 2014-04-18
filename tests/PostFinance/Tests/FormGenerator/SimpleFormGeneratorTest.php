@@ -1,18 +1,19 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests\FormGenerator;
+namespace PostFinance\Tests\FormGenerator;
 
-use Ogone\FormGenerator\SimpleFormGenerator;
-use Ogone\PaymentRequest;
+use PostFinance\FormGenerator\SimpleFormGenerator;
+use PostFinance\PaymentRequest;
 
 class SimpleFormGeneratorTest extends \TestCase
 {
@@ -20,7 +21,7 @@ class SimpleFormGeneratorTest extends \TestCase
 	public function GeneratesAForm()
 	{
 		$expected =
-			'<form method="post" action="https://secure.ogone.com/ncol/test/orderstandard_utf8.asp" id="ogone" name="ogone">
+			'<form method="post" action="https://e-payment.postfinance.ch/ncol/test/orderstandard.asp" id="ogone" name="ogone">
 				<input type="hidden" name="PSPID" value="123456789" />
 				<input type="hidden" name="ORDERID" value="987654321" />
 				<input type="hidden" name="CURRENCY" value="EUR" />
@@ -33,7 +34,7 @@ class SimpleFormGeneratorTest extends \TestCase
 				<input type="hidden" name="EMAIL" value="louis.xiv@versailles.fr" />
 
 				<input type="hidden" name="'.PaymentRequest::SHASIGN_FIELD.'" value="foo" />
-				<input type="submit" value="Submit" id="ogonesubmit" name="ogonesubmit" />
+				<input name="PostFinancesubmit" type="submit" value="Submit" id="PostFinancesubmit"/>
 			</form>';
 
 		$paymentRequest = $this->provideMinimalPaymentRequest();

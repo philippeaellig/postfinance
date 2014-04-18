@@ -1,30 +1,31 @@
 <?php
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests;
+namespace PostFinance\Tests;
 
 use Guzzle\Http\Client;
-use Ogone\DirectLink\Eci;
-use Ogone\Passphrase;
-use Ogone\DirectLink\Alias;
-use Ogone\DirectLink\CreateAliasRequest;
-use Ogone\DirectLink\CreateAliasResponse;
-use Ogone\ShaComposer\AllParametersShaComposer;
-use Ogone\ParameterFilter\ShaOutParameterFilter;
-use Ogone\DirectLink\DirectLinkPaymentRequest;
-use Ogone\DirectLink\DirectLinkPaymentResponse;
+use PostFinance\DirectLink\Eci;
+use PostFinance\Passphrase;
+use PostFinance\DirectLink\Alias;
+use PostFinance\DirectLink\CreateAliasRequest;
+use PostFinance\DirectLink\CreateAliasResponse;
+use PostFinance\ShaComposer\AllParametersShaComposer;
+use PostFinance\ParameterFilter\ShaOutParameterFilter;
+use PostFinance\DirectLink\DirectLinkPaymentRequest;
+use PostFinance\DirectLink\DirectLinkPaymentResponse;
 
 /**
  * @group integration
  */
-class OgoneTest extends \TestCase {
+class PostFinanceTest extends \TestCase {
 
     /**
      * @test
@@ -73,7 +74,7 @@ class OgoneTest extends \TestCase {
 
         $body['SHASIGN'] = $directLinkRequest->getShaSign();
 
-        $client = new Client($directLinkRequest->getOgoneUri());
+        $client = new Client($directLinkRequest->getPostFinanceUri());
         $request = $client->post(null, null, $body);
         $response = $request->send();
 
@@ -87,7 +88,7 @@ class OgoneTest extends \TestCase {
     /**
      * @test
      */
-    public function AliasIsCreatedByOgone()
+    public function AliasIsCreatedByPostFinance()
     {
         $passphraseOut = new Passphrase(PASSPHRASE_SHA_OUT);
         $shaOutComposer = new AllParametersShaComposer($passphraseOut);
@@ -118,7 +119,7 @@ class OgoneTest extends \TestCase {
     public function provideAliasResponse($createAlias = true, $noValidCardnumber = false)
     {
         /*
-         *  Create an alias request to Ogone
+         *  Create an alias request to PostFinance
          */
         $passphrase = new Passphrase(PASSPHRASE_SHA_IN);
         $shaComposer = new AllParametersShaComposer($passphrase);
@@ -143,11 +144,11 @@ class OgoneTest extends \TestCase {
 
         $body['SHASIGN'] = $createAliasRequest->getShaSign();
         $body['CN'] = 'Don Corleone';
-        $body['CARDNO'] = ($noValidCardnumber) ? '' : '4111111111111111'; // Ogone Visa test cardnumber
+        $body['CARDNO'] = ($noValidCardnumber) ? '' : '4111111111111111'; // PostFinance Visa test cardnumber
         $body['CVC'] = '777';
         $body['ED'] = date('my', strtotime('+1 year')); // test-date should be in the future
 
-        $client = new Client($createAliasRequest->getOgoneUri());
+        $client = new Client($createAliasRequest->getPostFinanceUri());
         $request = $client->post(null, null, $body);
         $response = $request->send();
 
@@ -156,7 +157,7 @@ class OgoneTest extends \TestCase {
         parse_str($url['query'], $params);
 
         /*
-         * Validate alias response from Ogone
+         * Validate alias response from PostFinance
          */
 
         $createAliasResponse = new CreateAliasResponse($params);

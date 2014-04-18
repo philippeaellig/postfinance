@@ -1,8 +1,8 @@
 <?php
 
-namespace Ogone\Tests;
+namespace PostFinance\Tests;
 
-use Ogone\HashAlgorithm;
+use PostFinance\HashAlgorithm;
 
 class HashAlgorithmTest extends \TestCase
 {

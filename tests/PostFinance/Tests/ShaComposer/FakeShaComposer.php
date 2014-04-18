@@ -1,17 +1,18 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests\ShaComposer;
+namespace PostFinance\Tests\ShaComposer;
 
-use Ogone\ShaComposer\ShaComposer;
+use PostFinance\ShaComposer\ShaComposer;
 
 /**
  * Fake SHA Composer to decouple test from actual SHA composers

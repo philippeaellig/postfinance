@@ -1,19 +1,20 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests\Ecommerce;
+namespace PostFinance\Tests\Ecommerce;
 
-use Ogone\PaymentResponse;
-use Ogone\Tests\ShaComposer\FakeShaComposer;
-use Ogone\Ecommerce\EcommercePaymentResponse;
+use PostFinance\PaymentResponse;
+use PostFinance\Tests\ShaComposer\FakeShaComposer;
+use PostFinance\Ecommerce\EcommercePaymentResponse;
 use InvalidArgumentException;
 
 class EcommercePaymentResponseTest extends \TestCase
@@ -49,7 +50,7 @@ class EcommercePaymentResponseTest extends \TestCase
 	 * @test
 	 * @expectedException InvalidArgumentException
 	 */
-	public function RequestIsFilteredFromNonOgoneParameters()
+	public function RequestIsFilteredFromNonPostFinanceParameters()
 	{
 		$aRequest = $this->provideRequest();
 

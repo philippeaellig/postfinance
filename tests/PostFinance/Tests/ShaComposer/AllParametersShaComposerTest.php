@@ -1,21 +1,22 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests\ShaComposer;
+namespace PostFinance\Tests\ShaComposer;
 
-use Ogone\HashAlgorithm;
-use Ogone\ParameterFilter\ShaOutParameterFilter;
-use Ogone\Passphrase;
-use Ogone\PaymentResponse;
-use Ogone\ShaComposer\AllParametersShaComposer;
+use PostFinance\HashAlgorithm;
+use PostFinance\ParameterFilter\ShaOutParameterFilter;
+use PostFinance\Passphrase;
+use PostFinance\PaymentResponse;
+use PostFinance\ShaComposer\AllParametersShaComposer;
 
 class AllParametersShaComposerTest extends \TestCase
 {

@@ -1,18 +1,19 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Ogone\Tests\Ecommerce;
+namespace PostFinance\Tests\Ecommerce;
 
-use Ogone\Tests\ShaComposer\FakeShaComposer;
-use Ogone\Ecommerce\EcommercePaymentRequest;
+use PostFinance\Tests\ShaComposer\FakeShaComposer;
+use PostFinance\Ecommerce\EcommercePaymentRequest;
 
 class EcommercePaymentRequestTest extends \TestCase
 {
@@ -93,7 +94,7 @@ class EcommercePaymentRequestTest extends \TestCase
 			//array('setFeedbackMessage', ''),
 			//array('setFeedbackParams', ''),
 			array('setLanguage', 'West-Vlaams'),
-			array('setOgoneUri', $notAUri),
+			array('setPostFinanceUri', $notAUri),
 			array('setOrderDescription', $longString),
 			array('setOrderid', "Weird çh@®a©†€rs"),
 			array('setOrderid', $longString),

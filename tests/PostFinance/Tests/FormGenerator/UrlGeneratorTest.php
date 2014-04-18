@@ -1,11 +1,11 @@
 <?php
 
-namespace Ogone\Tests\FormGenerator;
+namespace PostFinance\Tests\FormGenerator;
 
-use Ogone\Ecommerce\EcommercePaymentRequest;
-use Ogone\FormGenerator\UrlGenerator;
-use Ogone\PaymentRequest;
-use Ogone\Tests\ShaComposer\FakeShaComposer;
+use PostFinance\Ecommerce\EcommercePaymentRequest;
+use PostFinance\FormGenerator\UrlGenerator;
+use PostFinance\PaymentRequest;
+use PostFinance\Tests\ShaComposer\FakeShaComposer;
 
 class UrlGeneratorTest extends \TestCase {
 

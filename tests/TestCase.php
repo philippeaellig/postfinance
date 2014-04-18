@@ -1,8 +1,9 @@
 <?php
 
 /*
- * This file is part of the Marlon Ogone package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -10,17 +11,17 @@
  */
 
 
-use Ogone\Tests\ShaComposer\FakeShaComposer;
-use Ogone\Passphrase;
-use Ogone\ParameterFilter\ShaInParameterFilter;
-use Ogone\ShaComposer\AllParametersShaComposer;
-use Ogone\PaymentRequest;
-use Ogone\Ecommerce\EcommercePaymentRequest;
-use Ogone\DirectLink\CreateAliasRequest;
-use Ogone\DirectLink\DirectLinkPaymentRequest;
+use PostFinance\Tests\ShaComposer\FakeShaComposer;
+use PostFinance\Passphrase;
+use PostFinance\ParameterFilter\ShaInParameterFilter;
+use PostFinance\ShaComposer\AllParametersShaComposer;
+use PostFinance\PaymentRequest;
+use PostFinance\Ecommerce\EcommercePaymentRequest;
+use PostFinance\DirectLink\CreateAliasRequest;
+use PostFinance\DirectLink\DirectLinkPaymentRequest;
 
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once __DIR__.'/Ogone/Tests/ShaComposer/FakeShaComposer.php';
+require_once __DIR__.'/PostFinance/Tests/ShaComposer/FakeShaComposer.php';
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -30,7 +31,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $paymentRequest = new EcommercePaymentRequest(new FakeShaComposer);
         $paymentRequest->setPspid('123456789');
         $paymentRequest->setOrderid('987654321');
-		$paymentRequest->setOgoneUri(EcommercePaymentRequest::TEST);
+		$paymentRequest->setPostFinanceUri(EcommercePaymentRequest::TEST);
 
 		// minimal required fields for ogone (together with pspid and orderid)
 		$paymentRequest->setCurrency("EUR");
