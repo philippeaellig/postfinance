@@ -13,9 +13,9 @@ As always, this is work in progress. Please feel free to fork this project and l
 Installation:
 -------------
 The library is [PSR-0 compliant](http://www.php-fig.org/psr/psr-0/fr/)
- and the simplest way to install it is via composer
+ and the simplest way to install it is via composer:
 
-  composer require wysow/postfinance
+    composer require wysow/postfinance
 
 ## Overview ##
 
@@ -25,6 +25,10 @@ The library is [PSR-0 compliant](http://www.php-fig.org/psr/psr-0/fr/)
 - Receive a PaymentResponse back from PostFinance (as a HTTP Request)
 
 Both EcommercePaymentRequest, CreateAliasRequest and PaymentResponse are authenticated by comparing the SHA sign, which is a hash of the parameters and a secret passphrase. You can create the hash using a ShaComposer.
+
+The library also allows:
+- Fetching order information via PostFinance API using DirectLinkQueryRequest
+- Executing maintenance request via PostFinance API using DirectLinkMaintenanceRequest
 
 # SHA Composers #
 
@@ -65,7 +69,7 @@ This library currently supports both the legacy method "Main parameters only" an
     use PostFinance\ShaComposer\AllParametersShaComposer;
 	use PostFinance\FormGenerator;
 
-	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
 
@@ -76,7 +80,7 @@ This library currently supports both the legacy method "Main parameters only" an
 
 	// Set various params:
 	$ecommercePaymentRequest->setOrderid('123456');
-	$ecommercePaymentRequest->setAmount('150'); // in cents
+	$ecommercePaymentRequest->setAmount(150); // in cents
 	$ecommercePaymentRequest->setCurrency('EUR');
 	// ...
 
@@ -97,7 +101,7 @@ This library currently supports both the legacy method "Main parameters only" an
     use PostFinance\ShaComposer\AllParametersShaComposer;
 	use PostFinance\DirectLink\Alias;
 
-	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
 
@@ -123,7 +127,7 @@ This library currently supports both the legacy method "Main parameters only" an
 	// and the SHASIGN
 ```
 
-# DirectLinkRequest #
+# DirectLinkPaymentRequest #
 
 ```php
 	<?php
@@ -133,7 +137,7 @@ This library currently supports both the legacy method "Main parameters only" an
 	use PostFinance\ShaComposer\AllParametersShaComposer;
 	use PostFinance\DirectLink\Alias;
 
-	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
 
@@ -143,8 +147,8 @@ This library currently supports both the legacy method "Main parameters only" an
 	$alias = new Alias('customer_123');
 	$directLinkRequest->setAlias($alias);
 	$directLinkRequest->setPspid('123456');
-	$directLinkRequest->setUserId('ogone-api-user');
-	$directLinkRequest->setPassword('ogone-api-password');
+	$directLinkRequest->setUserId('postfinance-api-user');
+	$directLinkRequest->setPassword('postfinance-api-password');
 	$directLinkRequest->setAmount(100);
 	$directLinkRequest->setCurrency('EUR');
 	$directLinkRequest->validate();
@@ -153,6 +157,56 @@ This library currently supports both the legacy method "Main parameters only" an
 	// you have access to $directLinkRequest->toArray(), $directLinkRequest->getPostFinanceUri() and directLinkRequest->getShaSign()
 ```
 
+# DirectLinkQueryRequest #
+
+```php
+	<?php
+
+	use PostFinance\DirectLink\DirectLinkQueryRequest;
+	use PostFinance\Passphrase;
+	use PostFinance\ShaComposer\AllParametersShaComposer;
+	use PostFinance\DirectLink\Alias;
+
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
+	$shaComposer = new AllParametersShaComposer($passphrase);
+	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
+
+	$directLinkRequest = new DirectLinkQueryRequest($shaComposer);
+	$directLinkRequest->setPspid('123456');
+	$directLinkRequest->setUserId('postfinance-api-user');
+	$directLinkRequest->setPassword('postfinance-api-password');
+	$directLinkRequest->setPayId('order_1234');
+	$directLinkRequest->validate();
+
+	// now create a url to be posted to PostFinance
+	// you have access to $directLinkRequest->toArray(), $directLinkRequest->getPostFinanceUri() and directLinkRequest->getShaSign()
+```
+
+# DirectLinkMaintenanceRequest #
+
+```php
+	<?php
+
+	use PostFinance\DirectLink\DirectLinkMaintenanceRequest;
+	use PostFinance\Passphrase;
+	use PostFinance\ShaComposer\AllParametersShaComposer;
+	use PostFinance\DirectLink\Alias;
+
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
+	$shaComposer = new AllParametersShaComposer($passphrase);
+	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
+
+	$directLinkRequest = new DirectLinkMaintenanceRequest($shaComposer);
+	$directLinkRequest->setPspid('123456');
+	$directLinkRequest->setUserId('postfinance-api-user');
+	$directLinkRequest->setPassword('postfinance-api-password');
+	$directLinkRequest->setPayId('order_1234');
+	$directLinkRequest->setOperation(DirectLinkMaintenanceRequest::OPERATION_AUTHORISATION_RENEW);
+	$directLinkRequest->validate();
+
+	// now create a url to be posted to PostFinance
+	// you have access to $directLinkRequest->toArray(), $directLinkRequest->getPostFinanceUri() and directLinkRequest->getShaSign()
+```
 
 # EcommercePaymentResponse #
 
@@ -166,7 +220,7 @@ This library currently supports both the legacy method "Main parameters only" an
 
 	$ecommercePaymentResponse = new EcommercePaymentResponse($_REQUEST);
 
-	$passphrase = new Passphrase('my-sha-out-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-out-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaOutParameterFilter); //optional
 
@@ -190,7 +244,7 @@ This library currently supports both the legacy method "Main parameters only" an
 
 	$createAliasResponse = new CreateAliasResponse($_REQUEST);
 
-	$passphrase = new Passphrase('my-sha-out-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-out-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaOutParameterFilter); //optional
 
@@ -212,7 +266,7 @@ As the DirectLink payment gets an instant feedback from the server (and no async
 
 	use PostFinance\DirectLink\DirectLinkPaymentResponse;
 
-	$directLinkResponse = new DirectLinkPaymentResponse('ogone-direct-link-result-as-xml');
+	$directLinkResponse = new DirectLinkPaymentResponse('postfinance-direct-link-result-as-xml');
 
 	if($directLinkResponse->isSuccessful()) {
     	// handle payment confirmation

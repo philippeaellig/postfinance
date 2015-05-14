@@ -1,8 +1,9 @@
 <?php
 
 /*
- * This file is part of the Marlon PostFinance package.
+ * This file is part of the Wysow PostFinance package.
  *
+ * (c) Gaultier Boniface <gboniface@wysow.fr>
  * (c) Marlon BVBA <info@marlon.be>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -26,6 +27,21 @@ class EcommercePaymentResponseTest extends \TestCase
 		$paymentResponse = new EcommercePaymentResponse($aRequest);
 		$this->assertTrue($paymentResponse->isValid(new FakeShaComposer));
 	}
+
+    /** @test */
+    public function CanBeConvertedToArray()
+    {
+        $aRequest = $this->provideRequest();
+
+        $paymentResponse = new EcommercePaymentResponse($aRequest);
+        $paymentResponse->isValid(new FakeShaComposer);
+        $array = $paymentResponse->toArray();
+        $this->assertArrayHasKey('ORDERID', $array);
+        $this->assertArrayHasKey('STATUS', $array);
+        $this->assertArrayHasKey('AMOUNT', $array);
+        $this->assertArrayHasKey('SHASIGN', $array);
+    }
+
 
 	/**
 	 * @test

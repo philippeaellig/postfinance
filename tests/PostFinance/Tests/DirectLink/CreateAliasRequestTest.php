@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Marlon PostFinance package.
+ * This file is part of the Wysow PostFinance package.
  *
  * (c) Marlon BVBA <info@marlon.be>
  *

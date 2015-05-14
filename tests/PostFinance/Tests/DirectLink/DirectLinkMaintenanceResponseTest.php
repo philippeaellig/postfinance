@@ -1,19 +1,14 @@
 <?php
 /*
- * This file is part of the Marlon PostFinance package.
- *
- * (c) Marlon BVBA <info@marlon.be>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * @author Nicolas Clavaud <nicolas@lrqdo.fr>
  */
 
 namespace PostFinance\Tests\DirectLink;
 
 use PostFinance\Tests;
-use PostFinance\DirectLink\DirectLinkPaymentResponse;
+use PostFinance\DirectLink\DirectLinkMaintenanceResponse;
 
-class DirectLinkPaymentResponseTest extends \TestCase {
+class DirectLinkMaintenanceResponseTest extends \TestCase {
 
     /**
      * @test
@@ -21,7 +16,7 @@ class DirectLinkPaymentResponseTest extends \TestCase {
      */
     public function CantExistWithoutXmlFile()
     {
-        $paymentResponse = new DirectLinkPaymentResponse('');
+        $maintenanceResponse = new DirectLinkMaintenanceResponse('');
     }
 
     /** @test */
@@ -29,8 +24,8 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideXML();
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
-        $this->assertEquals('123', $paymentResponse->getParam('orderid'));
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
+        $this->assertEquals('5', $maintenanceResponse->getParam('orderid'));
     }
 
     /**
@@ -41,8 +36,8 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideXML();
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
-        $paymentResponse->getParam('unknown_param');
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
+        $maintenanceResponse->getParam('unknown_param');
     }
 
     /**
@@ -53,7 +48,7 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideInvalidXML();
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
     }
 
     /** @test */
@@ -61,8 +56,8 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideXML();
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
-        $this->assertTrue($paymentResponse->isSuccessful());
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
+        $this->assertTrue($maintenanceResponse->isSuccessful());
     }
 
 	/** @test */
@@ -70,8 +65,8 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideXML();
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
-        $this->assertEquals(100, $paymentResponse->getParam('amount'));
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
+        $this->assertEquals(100, $maintenanceResponse->getParam('amount'));
     }
 
 	public function provideFloats()
@@ -91,8 +86,8 @@ class DirectLinkPaymentResponseTest extends \TestCase {
     {
         $xml = $this->provideXML($string);
 
-        $paymentResponse = new DirectLinkPaymentResponse($xml);
-        $this->assertEquals($integer, $paymentResponse->getParam('amount'));
+        $maintenanceResponse = new DirectLinkMaintenanceResponse($xml);
+        $this->assertEquals($integer, $maintenanceResponse->getParam('amount'));
     }
 
 	/**
@@ -103,18 +98,14 @@ class DirectLinkPaymentResponseTest extends \TestCase {
 
         $xml = '<?xml version="1.0"?>
                 <ncresponse
-
-                ORDERID="123"
-                PAYID="0"
-                NCSTATUS="5"
-                NCERROR=""
+                orderID="5"
+                PAYID="33146134"
+                NCERROR="0"
+                NCERRORPLUS="!"
                 ACCEPTANCE=""
-                STATUS="5"
+                STATUS="91"
                 AMOUNT="'.(($amount) ? $amount : '1').'"
-                CURRENCY="EUR"
-                PM=""
-                BRAND=""
-                NCERRORPLUS="">
+                CURRENCY="GBP">
                 </ncresponse>';
 
         return $xml;

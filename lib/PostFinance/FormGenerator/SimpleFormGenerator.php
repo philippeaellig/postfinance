@@ -16,43 +16,86 @@ use PostFinance\Ecommerce\EcommercePaymentRequest;
 
 class SimpleFormGenerator implements FormGenerator
 {
-	private $ecommercePaymentRequest;
+    /**
+     * @deprecated
+     * @var null
+     */
+    private $formName = null;
 
-	private $showSubmitButton = true;
+    /**
+     * @deprecated
+     * @var null
+     */
+    private $showSubmitButton = null;
 
-	private $formName = 'postFinance';
+    /**
+     * Submit button title
+     *
+     * @var string
+     **/
+    protected $submitButtonTitle = 'Submit';
 
-	/** @return string */
-	public function render(EcommercePaymentRequest $ecommercePaymentRequest)
-	{
-		$this->ecommercePaymentRequest = $ecommercePaymentRequest;
-		ob_start();
-		include __DIR__.'/template/simpleForm.php';
-		return ob_get_clean();
-	}
+    /**
+     * Timeout in milliseconds before the form auto submission
+     * Set value <= 0 to disable auto submission
+     *
+     * @var integer
+     */
+    protected $autoSubmitTimeout = 0;
 
-	protected function getParameters()
-	{
-		return $this->ecommercePaymentRequest->toArray();
-	}
+    /**
+     * @param EcommercePaymentRequest $ecommercePaymentRequest
+     * @param string $formName
+     * @param bool $showSubmitButton
+     * @return string HTML
+     */
+    public function render(EcommercePaymentRequest $ecommercePaymentRequest, $formName = 'postfinance', $showSubmitButton = true)
+    {
+        $formName = null !== $this->formName?$this->formName:$formName;
+        $showSubmitButton = null !== $this->showSubmitButton?$this->showSubmitButton:$showSubmitButton;
 
-	protected function getPostFinanceUri()
-	{
-		return $this->ecommercePaymentRequest->getPostFinanceUri();
-	}
+        ob_start();
+        include __DIR__.'/template/simpleForm.php';
+        return ob_get_clean();
+    }
 
-	protected function getShaSign()
-	{
-		return $this->ecommercePaymentRequest->getShaSign();
-	}
+    /**
+     * @deprecated Will be removed in next major released, directly integrated in render method.
+     * @param bool $bool
+     */
+    public function showSubmitButton($bool = true)
+    {
+        $this->showSubmitButton = $bool;
+    }
 
-	public function showSubmitButton($bool = true)
-	{
-		$this->showSubmitButton = $bool;
-	}
+    /**
+     * @deprecated Will be removed in next major released, directly integrated in render method.
+     * @param $formName
+     */
+    public function setFormName($formName)
+    {
+        $this->formName = $formName;
+    }
 
-	public function setFormName($formName)
-	{
-		$this->formName = $formName;
-	}
+    /**
+     * Set the submit button title
+     *
+     * @param string $title: The submit button title
+     */
+    public function setSubmitButtonTitle($title)
+    {
+        $this->submitButtonTitle = $title;
+        return $this;
+    }
+
+    /**
+     * Set the auto submit timeout
+     *
+     * @param integer $timeout
+     */
+    public function setAutoSubmitTimeout($timeout)
+    {
+        $this->autoSubmitTimeout= $timeout;
+        return $this;
+    }
 }

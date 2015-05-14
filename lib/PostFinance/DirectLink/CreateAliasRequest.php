@@ -16,8 +16,8 @@ use PostFinance\ShaComposer\ShaComposer;
 
 class CreateAliasRequest extends AbstractRequest {
 
-    const TEST = "https://secure.PostFinance.com/ncol/test/alias_gateway_utf8.asp";
-    const PRODUCTION = "https://secure.PostFinance.com/ncol/prod/alias_gateway_utf8.asp";
+    const TEST = "https://secure.postfinance.com/ncol/test/alias_gateway_utf8.asp";
+    const PRODUCTION = "https://secure.postfinance.com/ncol/prod/alias_gateway_utf8.asp";
 
     public function __construct(ShaComposer $shaComposer)
     {
