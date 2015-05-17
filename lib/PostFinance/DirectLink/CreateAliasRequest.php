@@ -9,26 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace PostFinance\Ecommerce;
+namespace PostFinance\DirectLink;
 
-use PostFinance\AbstractPaymentRequest;
+use PostFinance\AbstractRequest;
 use PostFinance\ShaComposer\ShaComposer;
 
-class EcommercePaymentRequest extends AbstractPaymentRequest {
+class CreateAliasRequest extends AbstractRequest {
 
-    const TEST = "https://e-payment.postfinance.ch/ncol/test/orderstandard.asp";
-    const PRODUCTION = "https://e-payment.postfinance.ch/ncol/prod/orderstandard.asp";
+    const TEST = "https://secure.postfinance.com/ncol/test/alias_gateway_utf8.asp";
+    const PRODUCTION = "https://secure.postfinance.com/ncol/prod/alias_gateway_utf8.asp";
 
     public function __construct(ShaComposer $shaComposer)
     {
         $this->shaComposer = $shaComposer;
-        $this->postFinanceUri = self::TEST;
+        $this->PostFinanceUri = self::TEST;
     }
 
     public function getRequiredFields()
     {
         return array(
-            'pspid', 'currency', 'amount', 'orderid'
+            'pspid', 'accepturl', 'exceptionurl'
         );
     }
 
@@ -39,8 +39,6 @@ class EcommercePaymentRequest extends AbstractPaymentRequest {
 
     public function setAlias(Alias $alias)
     {
-        $this->parameters['aliasOperation'] = $alias->getAliasOperation();
-        $this->parameters['aliasusage'] = $alias->getAliasUsage();
-        $this->parameters['alias'] = $alias->getAlias();
+        $this->parameters['alias'] = (string) $alias;
     }
 }

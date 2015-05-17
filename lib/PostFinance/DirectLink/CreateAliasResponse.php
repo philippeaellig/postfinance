@@ -9,20 +9,33 @@
  * file that was distributed with this source code.
  */
 
-namespace PostFinance\Ecommerce;
+namespace PostFinance\DirectLink;
 
-use PostFinance\AbstractPaymentResponse;
+use PostFinance\AbstractResponse;
 use PostFinance\ShaComposer\ShaComposer;
 
-class EcommercePaymentResponse extends AbstractPaymentResponse {
+class CreateAliasResponse extends AbstractResponse {
+
+    const STATUS_OK = 0;
+    const STATUS_NOK = 1;
+    const STATUS_UPDATED = 2;
 
     /**
      * Checks if the response is valid
-     * @param ShaComposer $shaComposer
      * @return bool
      */
     public function isValid(ShaComposer $shaComposer)
     {
         return $shaComposer->compose($this->parameters) == $this->shaSign;
+    }
+
+    public function isSuccessful()
+    {
+        return in_array($this->getParam('STATUS'), array(self::STATUS_OK, self::STATUS_UPDATED));
+    }
+
+    public function getAlias()
+    {
+        return new Alias($this->parameters['ALIAS'], $this->parameters['CN'], $this->parameters['CARDNO'], $this->parameters['ED']);
     }
 }
