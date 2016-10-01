@@ -5,7 +5,7 @@ It provides the necessary components to complete a correct payment flow with the
 
 Requirements:
 
-- PHP 5.3
+- PHP 5.3+
 - network connection between your webserver and the PostFinance platform
 
 As always, this is work in progress. Please feel free to fork this project and get those pull requests coming!
