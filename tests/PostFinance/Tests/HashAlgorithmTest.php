@@ -4,7 +4,7 @@ namespace PostFinance\Tests;
 
 use PostFinance\HashAlgorithm;
 
-class HashAlgorithmTest extends \TestCase
+class HashAlgorithmTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test

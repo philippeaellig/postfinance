@@ -7,7 +7,8 @@ namespace PostFinance\DirectLink;
 
 use PostFinance\AbstractResponse;
 
-class DirectLinkMaintenanceResponse extends DirectLinkPaymentResponse {
+class DirectLinkMaintenanceResponse extends DirectLinkPaymentResponse
+{
 
     public function isSuccessful()
     {

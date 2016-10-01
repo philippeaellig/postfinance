@@ -5,12 +5,11 @@
 
 namespace PostFinance\Tests\DirectLink;
 
-use PostFinance\Tests;
 use PostFinance\Tests\ShaComposer\FakeShaComposer;
 use PostFinance\DirectLink\DirectLinkMaintenanceRequest;
-use PostFinance\DirectLink\Alias;
 
-class DirectLinkMaintenanceRequestTest extends \TestCase {
+class DirectLinkMaintenanceRequestTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @test */
     public function IsValidWhenRequiredFieldsAreFilledIn()
@@ -80,5 +79,18 @@ class DirectLinkMaintenanceRequestTest extends \TestCase {
             array('setAmount', '232'),
             array('setAmount', 2.32),
         );
+    }
+
+    /** @return DirectLinkMaintenanceRequest */
+    private function provideMinimalDirectLinkMaintenanceRequest()
+    {
+        $directLinkRequest = new DirectLinkMaintenanceRequest(new FakeShaComposer());
+        $directLinkRequest->setPspid('123456');
+        $directLinkRequest->setUserId('user_1234');
+        $directLinkRequest->setPassword('abracadabra');
+        $directLinkRequest->setPayId('12345678');
+        $directLinkRequest->setOperation('REN');
+
+        return $directLinkRequest;
     }
 }

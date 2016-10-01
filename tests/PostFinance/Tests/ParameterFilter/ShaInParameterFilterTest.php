@@ -14,13 +14,13 @@ namespace PostFinance\Tests\ShaComposer;
 
 use PostFinance\ParameterFilter\ShaInParameterFilter;
 
-class ShaInParameterFilterTest extends \TestCase
+class ShaInParameterFilterTest extends \PHPUnit_Framework_TestCase
 {
-	/** @test */
-	public function RemovesUnwantedParameters()
-	{
-		$filter = new ShaInParameterFilter;
-		$result = $filter->filter(array('foo' => 'bar', 'orderId' => 123));
-		$this->assertEquals(array('ORDERID' => 123), $result);
-	}
+    /** @test */
+    public function RemovesUnwantedParameters()
+    {
+        $filter = new ShaInParameterFilter;
+        $result = $filter->filter(array('foo' => 'bar', 'orderId' => 123));
+        $this->assertEquals(array('ORDERID' => 123), $result);
+    }
 }

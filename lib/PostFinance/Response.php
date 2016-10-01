@@ -11,7 +11,8 @@
 
 namespace PostFinance;
 
-interface Response {
+interface Response
+{
 
     /** @var string */
     const SHASIGN_FIELD = 'SHASIGN';

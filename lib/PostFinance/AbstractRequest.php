@@ -14,7 +14,9 @@ namespace PostFinance;
 use InvalidArgumentException;
 use RuntimeException;
 use BadMethodCallException;
+
 use PostFinance\ShaComposer\ShaComposer;
+
 
 abstract class AbstractRequest implements Request
 {
@@ -41,7 +43,7 @@ abstract class AbstractRequest implements Request
         'ownertelno', 'accepturl', 'declineurl', 'exceptionurl', 'cancelurl', 'backurl',
         'complus', 'paramplus', 'pm', 'brand', 'title', 'bgcolor', 'txtcolor', 'tblbgcolor',
         'tbltxtcolor', 'buttonbgcolor', 'buttontxtcolor', 'logo', 'fonttype', 'tp', 'paramvar',
-        'alias', 'aliasoperation', 'aliasusage', 'aliaspersistedafteruse'
+        'alias', 'aliasoperation', 'aliasusage', 'aliaspersistedafteruse', 'device', 'pmlisttype'
     );
 
     /** @return string */
@@ -65,18 +67,18 @@ abstract class AbstractRequest implements Request
 
     public function setPspid($pspid)
     {
-        if(strlen($pspid) > 30) {
+        if (strlen($pspid) > 30) {
             throw new InvalidArgumentException("PSPId is too long");
         }
         $this->parameters['pspid'] = $pspid;
     }
 
     /**
-     * ISO code eg nl-BE
+     * ISO code eg nl_BE
      */
     public function setLanguage($language)
     {
-        if(!array_key_exists($language, $this->allowedlanguages)) {
+        if (!array_key_exists($language, $this->allowedlanguages)) {
             throw new InvalidArgumentException("Invalid language ISO code");
         }
         $this->parameters['language'] = $language;
@@ -136,9 +138,8 @@ abstract class AbstractRequest implements Request
 
     public function validate()
     {
-        foreach($this->getRequiredFields() as $field)
-        {
-            if(empty($this->parameters[$field])) {
+        foreach ($this->getRequiredFields() as $field) {
+            if (empty($this->parameters[$field])) {
                 throw new RuntimeException("$field can not be empty");
             }
         }
@@ -146,10 +147,10 @@ abstract class AbstractRequest implements Request
 
     protected function validateUri($uri)
     {
-        if(!filter_var($uri, FILTER_VALIDATE_URL)) {
+        if (!filter_var($uri, FILTER_VALIDATE_URL)) {
             throw new InvalidArgumentException("Uri is not valid");
         }
-        if(strlen($uri) > 200) {
+        if (strlen($uri) > 200) {
             throw new InvalidArgumentException("Uri is too long");
         }
     }
@@ -158,7 +159,7 @@ abstract class AbstractRequest implements Request
     {
         $this->validateUri($uri);
 
-        if(!in_array($uri, $this->getValidPostFinanceUris())) {
+        if (!in_array($uri, $this->getValidPostFinanceUris())) {
             throw new InvalidArgumentException('No valid PostFinance url');
         }
     }
@@ -172,17 +173,18 @@ abstract class AbstractRequest implements Request
      */
     public function __call($method, $args)
     {
-        if(substr($method, 0, 3) == 'set') {
+        if (substr($method, 0, 3) == 'set') {
             $field = strtolower(substr($method, 3));
-            if(in_array($field, $this->PostFinanceFields)) {
+
+            if (in_array($field, $this->PostFinanceFields)) {
                 $this->parameters[$field] = $args[0];
                 return;
             }
         }
 
-        if(substr($method, 0, 3) == 'get') {
+        if (substr($method, 0, 3) == 'get') {
             $field = strtolower(substr($method, 3));
-            if(array_key_exists($field, $this->parameters)) {
+            if (array_key_exists($field, $this->parameters)) {
                 return $this->parameters[$field];
             }
         }
@@ -195,5 +197,4 @@ abstract class AbstractRequest implements Request
         $this->validate();
         return array_change_key_case($this->parameters, CASE_UPPER);
     }
-
 }

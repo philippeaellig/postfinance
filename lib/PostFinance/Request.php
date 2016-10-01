@@ -11,8 +11,8 @@
 
 namespace PostFinance;
 
-
-interface Request {
+interface Request
+{
 
     public function toArray();
 

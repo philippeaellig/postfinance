@@ -11,7 +11,6 @@
 
 namespace PostFinance;
 
-
 abstract class AbstractPaymentResponse extends AbstractResponse implements PaymentResponse
 {
     /**
@@ -25,15 +24,15 @@ abstract class AbstractPaymentResponse extends AbstractResponse implements Payme
         $oneDecimal = '#^\d*\.\d$#';
         $twoDecimals = '#^\d*\.\d\d$#';
 
-        if(preg_match($withoutDecimals, $value)) {
+        if (preg_match($withoutDecimals, $value)) {
             return (int) ($value.'00');
         }
 
-        if(preg_match($oneDecimal, $value)) {
+        if (preg_match($oneDecimal, $value)) {
             return (int) (str_replace('.', '', $value).'0');
         }
 
-        if(preg_match($twoDecimals, $value)) {
+        if (preg_match($twoDecimals, $value)) {
             return (int) (str_replace('.', '', $value));
         }
 
@@ -44,5 +43,4 @@ abstract class AbstractPaymentResponse extends AbstractResponse implements Payme
     {
         return in_array($this->getParam('STATUS'), array(PaymentResponse::STATUS_AUTHORISED, PaymentResponse::STATUS_PAYMENT_REQUESTED));
     }
-
 }
