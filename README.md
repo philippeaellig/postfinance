@@ -193,14 +193,14 @@ This library currently supports both the legacy method "Main parameters only" an
 	use PostFinance\ShaComposer\AllParametersShaComposer;
 	use PostFinance\DirectLink\Alias;
 
-	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-ogone-interface');
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
 	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
 
 	$directLinkRequest = new DirectLinkQueryRequest($shaComposer);
 	$directLinkRequest->setPspid('123456');
-	$directLinkRequest->setUserId('ogone-api-user');
-	$directLinkRequest->setPassword('ogone-api-password');
+	$directLinkRequest->setUserId('postfinance-api-user');
+	$directLinkRequest->setPassword('postfinance-api-password');
 	$directLinkRequest->setPayId('order_1234');
 	$directLinkRequest->validate();
 
