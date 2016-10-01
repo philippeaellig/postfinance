@@ -14,7 +14,8 @@ namespace PostFinance\Ecommerce;
 use PostFinance\AbstractPaymentRequest;
 use PostFinance\ShaComposer\ShaComposer;
 
-class EcommercePaymentRequest extends AbstractPaymentRequest {
+class EcommercePaymentRequest extends AbstractPaymentRequest
+{
 
     const TEST = "https://e-payment.postfinance.ch/ncol/test/orderstandard.asp";
     const PRODUCTION = "https://e-payment.postfinance.ch/ncol/prod/orderstandard.asp";
@@ -42,5 +43,14 @@ class EcommercePaymentRequest extends AbstractPaymentRequest {
         $this->parameters['aliasOperation'] = $alias->getAliasOperation();
         $this->parameters['aliasusage'] = $alias->getAliasUsage();
         $this->parameters['alias'] = $alias->getAlias();
+    }
+
+    protected function getValidOperations()
+    {
+        return array(
+            self::OPERATION_REQUEST_AUTHORIZATION,
+            self::OPERATION_REQUEST_DIRECT_SALE,
+            self::OPERATION_REQUEST_PRE_AUTHORIZATION,
+        );
     }
 }

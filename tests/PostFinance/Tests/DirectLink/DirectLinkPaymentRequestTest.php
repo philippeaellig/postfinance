@@ -15,7 +15,8 @@ use PostFinance\Tests\ShaComposer\FakeShaComposer;
 use PostFinance\DirectLink\DirectLinkPaymentRequest;
 use PostFinance\DirectLink\Alias;
 
-class DirectLinkPaymentRequestTest extends \TestCase {
+class DirectLinkPaymentRequestTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @test */
     public function IsValidWhenRequiredFieldsAreFilledIn()
@@ -82,6 +83,16 @@ class DirectLinkPaymentRequestTest extends \TestCase {
 
     /**
      * @test
+     */
+    public function isValidWhenOperationIsSet()
+    {
+        $directLinkPaymentRequest = $this->provideMinimalDirectLinkPaymentRequest();
+        $directLinkPaymentRequest->setOperation(DirectLinkPaymentRequest::OPERATION_REQUEST_DIRECT_SALE);
+        $directLinkPaymentRequest->validate();
+    }
+
+    /**
+     * @test
      * @dataProvider provideBadParameters
      * @expectedException \InvalidArgumentException
      */
@@ -95,7 +106,22 @@ class DirectLinkPaymentRequestTest extends \TestCase {
     {
         return array(
             array('setPswd', '12'),
-            array('setUserid', '12')
+            array('setUserid', '12'),
+            array('setOperation', 'UNKNOWN_OPERATION'),
         );
+    }
+
+    /** @return DirectLinkPaymentRequest */
+    private function provideMinimalDirectLinkPaymentRequest()
+    {
+        $directLinkRequest = new DirectLinkPaymentRequest(new FakeShaComposer());
+        $directLinkRequest->setPspid('123456');
+        $directLinkRequest->setUserId('user_1234');
+        $directLinkRequest->setPassword('abracadabra');
+        $directLinkRequest->setAmount(100);
+        $directLinkRequest->setCurrency('EUR');
+        $directLinkRequest->setOrderid('999');
+
+        return $directLinkRequest;
     }
 }

@@ -14,7 +14,8 @@ namespace PostFinance\Ecommerce;
 use PostFinance\AbstractPaymentResponse;
 use PostFinance\ShaComposer\ShaComposer;
 
-class EcommercePaymentResponse extends AbstractPaymentResponse {
+class EcommercePaymentResponse extends AbstractPaymentResponse
+{
 
     /**
      * Checks if the response is valid

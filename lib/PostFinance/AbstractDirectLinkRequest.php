@@ -7,7 +7,8 @@ namespace PostFinance;
 
 use InvalidArgumentException;
 
-abstract class AbstractDirectLinkRequest extends AbstractRequest {
+abstract class AbstractDirectLinkRequest extends AbstractRequest
+{
 
     public function setUserId($userid)
     {

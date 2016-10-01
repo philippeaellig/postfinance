@@ -6,11 +6,14 @@ use PostFinance\Ecommerce\EcommercePaymentRequest;
 use PostFinance\FormGenerator\UrlGenerator;
 use PostFinance\PaymentRequest;
 use PostFinance\Tests\ShaComposer\FakeShaComposer;
+use PostFinance\Tests\TestCase;
 
-class UrlGeneratorTest extends \TestCase {
+class UrlGeneratorTest extends TestCase
+{
 
     /** @test */
-    public function GeneratesAnUrl() {
+    public function GeneratesAnUrl()
+    {
         $expected = EcommercePaymentRequest::TEST . '?'.
             'pspid=123456789' . '&'.
             'orderid=987654321' . '&'.

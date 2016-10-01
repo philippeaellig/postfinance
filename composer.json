@@ -1,7 +1,13 @@
 {
     "name": "wysow/postfinance",
     "autoload": {
-        "psr-0": { "PostFinance": "lib/" }
+        "psr-4": {
+            "PostFinance\\": "lib/PostFinance/",
+            "PostFinance\\Tests\\": "tests/PostFinance/Tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.3"
     },
     "authors": [
         {
@@ -14,8 +20,8 @@
         }
     ],
     "require-dev" : {
-        "phpunit/phpunit": "3.7.*",
-        "guzzle/guzzle": "3.7.*",
-        "symfony/class-loader": "2.5.*"
+        "phpunit/phpunit": "@stable",
+        "guzzle/guzzle": "@stable",
+        "symfony/class-loader": "@stable"
     }
 }

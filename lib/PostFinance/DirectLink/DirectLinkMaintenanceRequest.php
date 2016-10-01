@@ -9,7 +9,8 @@ use PostFinance\AbstractDirectLinkRequest;
 use PostFinance\ShaComposer\ShaComposer;
 use InvalidArgumentException;
 
-class DirectLinkMaintenanceRequest extends AbstractDirectLinkRequest {
+class DirectLinkMaintenanceRequest extends AbstractDirectLinkRequest
+{
 
     const TEST = "https://secure.postfinance.com/ncol/test/maintenancedirect.asp";
     const PRODUCTION = "https://secure.postfinance.com/ncol/prod/maintenancedirect.asp";

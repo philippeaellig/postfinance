@@ -8,7 +8,8 @@ namespace PostFinance\DirectLink;
 use PostFinance\AbstractDirectLinkRequest;
 use PostFinance\ShaComposer\ShaComposer;
 
-class DirectLinkQueryRequest extends AbstractDirectLinkRequest {
+class DirectLinkQueryRequest extends AbstractDirectLinkRequest
+{
 
     const TEST = "https://secure.postfinance.com/ncol/test/querydirect.asp";
     const PRODUCTION = "https://secure.postfinance.com/ncol/prod/querydirect.asp";

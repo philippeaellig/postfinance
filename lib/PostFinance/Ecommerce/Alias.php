@@ -4,7 +4,8 @@ namespace PostFinance\Ecommerce;
 
 use InvalidArgumentException;
 
-class Alias {
+class Alias
+{
 
     const OPERATION_BY_MERCHANT = 'BYMERCHANT';
     const OPERATION_BY_PSP = 'BYPSP';
@@ -20,7 +21,11 @@ class Alias {
 
     public function __construct($alias, $aliasOperation = self::OPERATION_BY_MERCHANT, $aliasUsage = null)
     {
-        if(preg_match('/[^a-zA-Z0-9_-]/', $alias)) {
+        if (strlen($alias) > 50) {
+            throw new InvalidArgumentException("Alias is too long");
+        }
+
+        if (preg_match('/[^a-zA-Z0-9_-]/', $alias)) {
             throw new InvalidArgumentException("Alias cannot contain special characters");
         }
 
@@ -68,5 +73,4 @@ class Alias {
     {
         return $this->alias;
     }
-
 }
