@@ -12,7 +12,7 @@ As always, this is work in progress. Please feel free to fork this project and g
 
 Installation:
 -------------
-The library is [PSR-0 compliant](http://www.php-fig.org/psr/psr-0/fr/)
+The library is [PSR-4 compliant](http://www.php-fig.org/psr/psr-4/)
  and the simplest way to install it is via composer:
 
     composer require wysow/postfinance
