@@ -27,6 +27,10 @@ interface PaymentResponse extends Response
     /**
      * @var int
      */
+    const STATUS_AUTHORISATION_CANCELLATION_WAITING = 61;
+    /**
+     * @var int
+     */
     const STATUS_PAYMENT_DELETED = 7;
     /**
      * @var int
