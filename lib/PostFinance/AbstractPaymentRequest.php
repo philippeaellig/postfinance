@@ -79,6 +79,7 @@ abstract class AbstractPaymentRequest extends AbstractRequest
         'UNEUROCOM'             => 'UNEUROCOM',
         'VISA'                  => 'CreditCard',
         'Wallie'                => 'Wallie',
+        'TWINT'                 => 'TWINT',
     );
 
     /** Note this is public to allow easy modification, if need be. */
