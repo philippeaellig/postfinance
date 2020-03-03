@@ -14,7 +14,8 @@ namespace PostFinance\DirectLink;
 use PostFinance\AbstractResponse;
 use PostFinance\ShaComposer\ShaComposer;
 
-class CreateAliasResponse extends AbstractResponse {
+class CreateAliasResponse extends AbstractResponse
+{
 
     const STATUS_OK = 0;
     const STATUS_NOK = 1;

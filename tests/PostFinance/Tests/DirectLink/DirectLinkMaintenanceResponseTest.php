@@ -5,10 +5,10 @@
 
 namespace PostFinance\Tests\DirectLink;
 
-use PostFinance\Tests;
 use PostFinance\DirectLink\DirectLinkMaintenanceResponse;
 
-class DirectLinkMaintenanceResponseTest extends \TestCase {
+class DirectLinkMaintenanceResponseTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @test

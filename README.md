@@ -5,14 +5,14 @@ It provides the necessary components to complete a correct payment flow with the
 
 Requirements:
 
-- PHP 5.3
+- PHP 5.3+
 - network connection between your webserver and the PostFinance platform
 
-As always, this is work in progress. Please feel free to fork this project and let them pull requests coming!
+As always, this is work in progress. Please feel free to fork this project and get those pull requests coming!
 
 Installation:
 -------------
-The library is [PSR-0 compliant](http://www.php-fig.org/psr/psr-0/fr/)
+The library is [PSR-4 compliant](http://www.php-fig.org/psr/psr-4/)
  and the simplest way to install it is via composer:
 
     composer require wysow/postfinance
@@ -29,6 +29,7 @@ Both EcommercePaymentRequest, CreateAliasRequest and PaymentResponse are authent
 The library also allows:
 - Fetching order information via PostFinance API using DirectLinkQueryRequest
 - Executing maintenance request via PostFinance API using DirectLinkMaintenanceRequest
+
 
 # SHA Composers #
 
@@ -67,7 +68,7 @@ This library currently supports both the legacy method "Main parameters only" an
 	use PostFinance\Passphrase;
 	use PostFinance\Ecommerce\EcommercePaymentRequest;
     use PostFinance\ShaComposer\AllParametersShaComposer;
-	use PostFinance\FormGenerator;
+	use PostFinance\FormGenerator\SimpleFormGenerator;
 
 	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
 	$shaComposer = new AllParametersShaComposer($passphrase);
@@ -111,7 +112,7 @@ This library currently supports both the legacy method "Main parameters only" an
 	// $createAliasRequest->setPostFinanceUri(CreateAliasRequest::PRODUCTION);
 
 	// set required params
-	$createAliasRequest->setPspid('123456');
+	$createAliasRequest->setPspid('123456');
 	$createAliasRequest->setAccepturl('http://example.com/accept');
 	$createAliasRequest->setExceptionurl('http://example.com/exception');
 
@@ -151,6 +152,31 @@ This library currently supports both the legacy method "Main parameters only" an
 	$directLinkRequest->setPassword('postfinance-api-password');
 	$directLinkRequest->setAmount(100);
 	$directLinkRequest->setCurrency('EUR');
+	$directLinkRequest->validate();
+
+	// now create a url to be posted to PostFinance
+	// you have access to $directLinkRequest->toArray(), $directLinkRequest->getPostFinanceUri() and directLinkRequest->getShaSign()
+```
+
+# DirectLinkQueryRequest #
+
+```php
+	<?php
+
+	use PostFinance\DirectLink\DirectLinkQueryRequest;
+	use PostFinance\Passphrase;
+	use PostFinance\ShaComposer\AllParametersShaComposer;
+	use PostFinance\DirectLink\Alias;
+
+	$passphrase = new Passphrase('my-sha-in-passphrase-defined-in-postfinance-interface');
+	$shaComposer = new AllParametersShaComposer($passphrase);
+	$shaComposer->addParameterFilter(new ShaInParameterFilter); //optional
+
+	$directLinkRequest = new DirectLinkQueryRequest($shaComposer);
+	$directLinkRequest->setPspid('123456');
+	$directLinkRequest->setUserId('postfinance-api-user');
+	$directLinkRequest->setPassword('postfinance-api-password');
+	$directLinkRequest->setPayId('order_1234');
 	$directLinkRequest->validate();
 
 	// now create a url to be posted to PostFinance

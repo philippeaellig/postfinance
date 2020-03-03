@@ -25,8 +25,9 @@ use PostFinance\DirectLink\DirectLinkPaymentResponse;
 /**
  * @group integration
  */
-class PostFinanceTest extends \TestCase {
 
+class PostFinanceTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @test
      */
@@ -68,7 +69,7 @@ class PostFinanceTest extends \TestCase {
         $directLinkRequest->validate();
 
         $body = array();
-        foreach($directLinkRequest->toArray() as $key => $value) {
+        foreach ($directLinkRequest->toArray() as $key => $value) {
             $body[strtoupper($key)] = $value;
         }
 
@@ -129,7 +130,7 @@ class PostFinanceTest extends \TestCase {
         $createAliasRequest->setAccepturl('http://www.example.com');
         $createAliasRequest->setExceptionurl('http://www.example.com');
 
-        if($createAlias == true) {
+        if ($createAlias == true) {
             $unique_alias = uniqid('customer_'); // create a unique alias
             $alias = new Alias($unique_alias);
             $createAliasRequest->setAlias($alias);
@@ -138,7 +139,7 @@ class PostFinanceTest extends \TestCase {
         $createAliasRequest->validate();
 
         $body = array();
-        foreach($createAliasRequest->toArray() as $key => $value) {
+        foreach ($createAliasRequest->toArray() as $key => $value) {
             $body[strtoupper($key)] = $value;
         }
 

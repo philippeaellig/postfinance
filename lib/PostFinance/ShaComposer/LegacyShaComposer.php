@@ -21,10 +21,10 @@ use PostFinance\Passphrase;
  */
 class LegacyShaComposer implements ShaComposer
 {
-	/**
-	 * @var string Passphrase
-	 */
-	private $passphrase;
+    /**
+     * @var string Passphrase
+     */
+    private $passphrase;
 
     /**
      * @var HashAlgorithm

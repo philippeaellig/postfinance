@@ -13,7 +13,8 @@ namespace PostFinance\Tests\DirectLink;
 use PostFinance\DirectLink\CreateAliasResponse;
 use PostFinance\Tests\ShaComposer\FakeShaComposer;
 
-class CreateAliasResponseTest extends \TestCase {
+class CreateAliasResponseTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @test */
     public function CanBeVerified()
@@ -79,5 +80,4 @@ class CreateAliasResponseTest extends \TestCase {
             'ED' => '1220'
         );
     }
-
 }

@@ -22,13 +22,13 @@ use PostFinance\ParameterFilter\ParameterFilter;
  */
 class AllParametersShaComposer implements ShaComposer
 {
-	/** @var array of ParameterFilter */
-	private $parameterFilters;
+    /** @var array of ParameterFilter */
+    private $parameterFilters;
 
-	/**
-	 * @var string Passphrase
-	 */
-	private $passphrase;
+    /**
+     * @var string Passphrase
+     */
+    private $passphrase;
 
     /**
      * @var HashAlgorithm
@@ -40,40 +40,40 @@ class AllParametersShaComposer implements ShaComposer
      */
     private $forceUtf8 = false;
 
-	public function __construct(Passphrase $passphrase, HashAlgorithm $hashAlgorithm = null)
-	{
-		$this->passphrase = $passphrase;
+    public function __construct(Passphrase $passphrase, HashAlgorithm $hashAlgorithm = null)
+    {
+        $this->passphrase = $passphrase;
 
-		$this->addParameterFilter(new GeneralParameterFilter);
+        $this->addParameterFilter(new GeneralParameterFilter);
 
         $this->hashAlgorithm = $hashAlgorithm ?: new HashAlgorithm(HashAlgorithm::HASH_SHA1);
-	}
+    }
 
-	public function compose(array $parameters)
-	{
-		foreach($this->parameterFilters as $parameterFilter) {
-			$parameters = $parameterFilter->filter($parameters);
-		}
+    public function compose(array $parameters)
+    {
+        foreach ($this->parameterFilters as $parameterFilter) {
+            $parameters = $parameterFilter->filter($parameters);
+        }
 
-		ksort($parameters);
+        ksort($parameters);
 
-		// compose SHA string
-		$shaString = '';
-		foreach($parameters as $key => $value) {
-			$shaString .= sprintf('%s=%s%s',
+        // compose SHA string
+        $shaString = '';
+        foreach($parameters as $key => $value) {
+            $shaString .= sprintf('%s=%s%s',
                 $key,
                 ($this->forceUtf8 && !$this->isUtf8($value)) ? utf8_encode($value) : $value,
                 $this->passphrase
             );
-		}
+        }
 
-		return strtoupper(hash($this->hashAlgorithm, $shaString));
-	}
+        return strtoupper(hash($this->hashAlgorithm, $shaString));
+    }
 
-	public function addParameterFilter(ParameterFilter $parameterFilter)
-	{
-		$this->parameterFilters[] = $parameterFilter;
-	}
+    public function addParameterFilter(ParameterFilter $parameterFilter)
+    {
+        $this->parameterFilters[] = $parameterFilter;
+    }
 
     /**
      * Define if we force UTF8 encoding on values before composing

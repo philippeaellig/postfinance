@@ -2,9 +2,9 @@
 namespace PostFinance\Tests\Ecommerce;
 
 use PostFinance\Ecommerce\Alias;
-use TestCase;
 
-class AliasTest extends TestCase {
+class AliasTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @test */
     public function AliasCanHaveUsage()
@@ -31,6 +31,15 @@ class AliasTest extends TestCase {
      * @test
      * @expectedException \InvalidArgumentException
      */
+    public function AliasIsMax50Characters()
+    {
+        new Alias(str_repeat('X', 51));
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
     public function AliasIsAlphaNumeric()
     {
         new Alias('some alias with spaces, dots (.), etc');
@@ -41,5 +50,4 @@ class AliasTest extends TestCase {
     {
         $this->assertEquals('test123', (string) new Alias('test123'));
     }
-
 }

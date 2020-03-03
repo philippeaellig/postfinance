@@ -15,10 +15,11 @@ use PostFinance\AbstractPaymentRequest;
 use PostFinance\ShaComposer\ShaComposer;
 use InvalidArgumentException;
 
-class DirectLinkPaymentRequest extends AbstractPaymentRequest {
+class DirectLinkPaymentRequest extends AbstractPaymentRequest
+{
 
-    const TEST = "https://secure.PostFinance.com/ncol/test/orderdirect.asp";
-    const PRODUCTION = "https://secure.PostFinance.com/ncol/prod/orderdirect.asp";
+    const TEST = "https://e-payment.postfinance.ch/ncol/test/orderdirect.asp";
+    const PRODUCTION = "https://e-payment.postfinance.ch/ncol/prod/orderdirect.asp";
 
     public function __construct(ShaComposer $shaComposer)
     {
@@ -40,7 +41,7 @@ class DirectLinkPaymentRequest extends AbstractPaymentRequest {
 
     public function setUserId($userid)
     {
-        if(strlen($userid) < 8) {
+        if (strlen($userid) < 8) {
             throw new InvalidArgumentException("User ID is too short");
         }
         $this->parameters['userid'] = $userid;
@@ -54,7 +55,7 @@ class DirectLinkPaymentRequest extends AbstractPaymentRequest {
 
     public function setPswd($password)
     {
-        if(strlen($password) < 8) {
+        if (strlen($password) < 8) {
             throw new InvalidArgumentException("Password is too short");
         }
         $this->parameters['pswd'] = $password;
@@ -73,5 +74,15 @@ class DirectLinkPaymentRequest extends AbstractPaymentRequest {
     public function setCvc($cvc)
     {
         $this->parameters['cvc'] = $cvc;
+    }
+
+    protected function getValidOperations()
+    {
+        return array(
+            self::OPERATION_REQUEST_AUTHORIZATION,
+            self::OPERATION_REQUEST_DIRECT_SALE,
+            self::OPERATION_REFUND,
+            self::OPERATION_REQUEST_PRE_AUTHORIZATION,
+        );
     }
 }
