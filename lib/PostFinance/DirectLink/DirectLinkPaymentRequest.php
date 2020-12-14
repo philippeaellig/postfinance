@@ -76,6 +76,77 @@ class DirectLinkPaymentRequest extends AbstractPaymentRequest
         $this->parameters['cvc'] = $cvc;
     }
 
+    public function setBrowserAcceptHeader($browserAcceptHeader)
+    {
+        $this->parameters['browserAcceptHeader'] = $browserAcceptHeader;
+    }
+
+    public function setBrowserColorDepth($browserColorDepth)
+    {
+        $this->parameters['browserColorDepth'] = $browserColorDepth;
+    }
+
+    public function setBrowserJavaEnabled($browserJavaEnabled)
+    {
+        $this->parameters['browserJavaEnabled'] = $browserJavaEnabled;
+    }
+
+    public function setBrowserLanguage($browserLanguage)
+    {
+        $this->parameters['browserLanguage'] = $browserLanguage;
+    }
+
+    public function setBrowserScreenHeight($browserScreenHeight)
+    {
+        $this->parameters['browserScreenHeight'] = $browserScreenHeight;
+    }
+
+    public function setBrowserScreenWidth($browserScreenWidth)
+    {
+        $this->parameters['browserScreenWidth'] = $browserScreenWidth;
+    }
+
+    public function setBrowserTimeZone($browserTimeZone)
+    {
+        $this->parameters['browserTimeZone'] = $browserTimeZone;
+    }
+
+    public function setBrowserUserAgent($browserUserAgent)
+    {
+        $this->parameters['browserUserAgent'] = $browserUserAgent;
+    }
+
+    public function setFlag3d($flag3d)
+    {
+        $this->parameters['FLAG3D'] = $flag3d;
+    }
+
+    public function setHttpAccept($httpAccept)
+    {
+        $this->parameters['HTTP_ACCEPT'] = $httpAccept;
+    }
+
+    public function setHttpUserAgent($httpUserAgent)
+    {
+        $this->parameters['HTTP_USER_AGENT'] = $httpUserAgent;
+    }
+
+    public function setWin3ds($win3ds)
+    {
+        $this->parameters['WIN3DS'] = $win3ds;
+    }
+
+    public function setTxtoken($txtoken)
+    {
+        $this->parameters['txtoken'] = $txtoken;
+    }
+
+    public function setPayId($payId)
+    {
+        $this->parameters['payid'] = $payId;
+
+    }
+
     protected function getValidOperations()
     {
         return array(
