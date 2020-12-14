@@ -53,9 +53,26 @@ class AllParametersShaComposerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedSha, $composer->compose($request));
     }
 
+    /**
+     * @test
+     * @dataProvider provideSha512NonUTF8Request
+     */
+    public function UTF8ValuesAreCorrectlyComposed(PassPhrase $passphrase, array $request, $nonUtf8EncodedSha, $utf8EncodedSha)
+    {
+        $composer = new AllParametersShaComposer($passphrase, new HashAlgorithm(HashAlgorithm::HASH_SHA512));
+
+        $composer->addParameterFilter(new ShaOutParameterFilter);
+
+        $composer->forceUtf8(false);
+        $this->assertEquals($nonUtf8EncodedSha, $composer->compose($request));
+
+        $composer->forceUtf8(true);
+        $this->assertEquals($utf8EncodedSha, $composer->compose($request));
+    }
+
     public function provideSha1Request()
     {
-        $passphrase = new Passphrase('Mysecretsig1875!?');
+        $passphrase = new PassPhrase('Mysecretsig1875!?');
 
         $expectedSha1 = 'B209960D5703DD1047F95A0F97655FFE5AC8BD52';
         $request1 = $this->createMinimalParameterSet();
@@ -103,6 +120,22 @@ class AllParametersShaComposerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function provideSha512NonUTF8Request()
+    {
+        $passphrase = new PassPhrase('Mysecretsig1875!?');
+
+        $nonUtf8EncodedSha = '95BA73E29938863971158FE51BFE75BD03CA27C30982226B7C6569048DBFBD9096DF75D656C5FECDC59D485DD31A6594DAF43D4216D5FE0F7BB9B586ABB7B6F8';
+        $utf8EncodedSha    = '2880212A315FDFA216E4BADAC0F9A72C05448266895EFB544D84247C9CD0239B8A87B64C4B1EFE2E38892D49C1B616D2E87FBE4DD1CB9E386F2562E7B112351D';
+
+        $request = array_map(function ($v) {
+            return iconv('UTF-8', 'ISO-8859-1', $v);
+        }, $this->createExtensiveUTF8ParameterSet());
+
+        return array(
+            array($passphrase, $request, $nonUtf8EncodedSha, $utf8EncodedSha),
+        );
+    }
+
     protected function createMinimalParameterSet()
     {
         return array(
@@ -141,4 +174,15 @@ class AllParametersShaComposerTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         );
     }
+<<<<<<< HEAD
+
+    protected function createExtensiveUTF8ParameterSet()
+    {
+        $parameters_set = $this->createExtensiveParameterSet();
+        $parameters_set['COMPLUS'] = 'Non ASCÏÏ CHÄRÄCTËRS';
+
+        return $parameters_set;
+    }
+=======
+>>>>>>> wysow/master
 }
