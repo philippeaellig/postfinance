@@ -174,7 +174,6 @@ class AllParametersShaComposerTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         );
     }
-<<<<<<< HEAD
 
     protected function createExtensiveUTF8ParameterSet()
     {
@@ -183,6 +182,4 @@ class AllParametersShaComposerTest extends \PHPUnit_Framework_TestCase
 
         return $parameters_set;
     }
-=======
->>>>>>> wysow/master
 }
