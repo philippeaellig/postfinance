@@ -33,6 +33,10 @@ class DirectLinkPaymentResponse extends AbstractPaymentResponse
             // filter request for PostFinance parameters
             $this->parameters = $this->filterRequestParameters($attributesArray);
 
+            if ($xmlResponse->HTML_ANSWER) {
+                $this->parameters['HTML_ANSWER'] = base64_decode($xmlResponse->HTML_ANSWER);
+            }
+
         } else {
             throw new InvalidArgumentException("No valid XML-string given");
         }
